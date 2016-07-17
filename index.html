@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <!-- compiled css output -->
+    <link href="css/ionic.app.css" rel="stylesheet">
+    
+    <!-- ionic/angularjs js -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic-material/dist/ionic.material.min.js"></script>
+    <script src="lib/ngstorage/ngStorage.js"></script>
+    <script src="lib/angular-resource/angular-resource.js"></script>
+    <script src="lib/intl-tel-input/build/js/intlTelInput.js"></script>
+    <script src="lib/intl-tel-input/lib/libphonenumber/build/utils.js"></script>
+    <script src="lib/international-phone-number/releases/international-phone-number.js">
+    </script>
+    
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+    <!-- ng-translation -->
+    <script src="lib/ng-translation/dist/ng-translation.min.js"></script>
+
+    <!-- ng-draggable -->
+    <script src="lib/ngDraggable/ngDraggable.js"></script>
+    
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="js/api.constant.js"></script>
+    <script src="js/auth.service.js"></script>
+    <script src="js/routes.js"></script>
+
+    <!-- resources -->
+    <script src="resources/user.service.js"></script>
+    <script src="resources/projects.service.js"></script>
+    <script src="resources/project.service.js"></script>
+    <script src="resources/task.service.js"></script>
+    <script src="resources/sprints.service.js"></script>
+    <script src="resources/user.story.service.js"></script>
+    <script src="resources/action.service.js"></script>
+
+    <script src="resources/centralVuelo.service.js"></script>
+    <script src="resources/centralTripulacion.service.js"></script>
+    <script src="resources/pasajero.service.js"></script>
+
+    <!-- Login -->
+    <script src="modules/login/login.controller.js"></script>
+    
+    <!-- Signup -->
+    <script src="modules/signup/signup.controller.js"></script>
+    
+    <!-- projects -->
+    <script src="modules/tabs/projects/dashboard/dashboard.controller.js"></script>
+    <script src="modules/tabs/projects/create/create.project.controller.js"></script>
+    <script src="modules/tabs/projects/project/project.controller.js"></script>
+    <script src="modules/tabs/projects/project/tasks/tasks.controller.js"></script>
+    <script src="modules/tabs/projects/project/tasks/create/create.task.controller.js"></script>
+    <script src="modules/tabs/projects/project/create/create.sprint.controller.js"></script>
+    <script src="modules/tabs/account/profile/account.controller.js"></script>
+
+    <script src="modules/tabs/projects/centralVuelo/centralVuelo.controller.js"></script>
+    <script src="modules/tabs/projects/centralTripulacion/centralTripulacion.controller.js"></script>
+    <script src="modules/tabs/projects/pasajero/pasajero.controller.js"></script>
+  </head>
+  <body ng-app="TEGScrum">
+
+    <!--
+      The views will be rendered in the <ion-nav-view> directive below
+      Templates are in the /templates folder (but you could also
+      have templates inline in this html file if you'd like).
+    -->
+    <ion-nav-view></ion-nav-view>
+  </body>
+</html>

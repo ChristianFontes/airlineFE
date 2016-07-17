@@ -1,0 +1,23 @@
+{
+	"phone": "Phone Number:",
+	"emailText": "name@domain.com",
+	"passwordText": "Your Password",
+	"firstName": "First Name:",
+	"lastName": "Last Name:",
+	"streetAddress": "Street Address:",
+	"state": "State:",
+	"postalCode": "Postal Code",
+	"email": "Email:",
+	"password": "Password",
+	"login": "Log In",
+	"messageSignup": "Don't Have an Account?",
+	"signup": "Sign Up Here",
+	"register": "Register",
+	"email_and_password_required": "Username and Password are required",
+	"email_and_password_dont_match": "Username and Password don't match",
+	"user_not_found": "Username not found",
+	"back": "Back",
+	"InfoContact": "Contact Information",
+	"dni": "DNI Number:",
+	"InfoLogin": "Information Login"
+}

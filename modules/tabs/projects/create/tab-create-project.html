@@ -1,0 +1,106 @@
+<ion-view view-title="New Project">
+    <ion-content class="padding create-project-container">
+        <h3 class="light center">Upload your Image</h3>
+        <div class="row">
+            <div class="col logo-preview padding">
+                <img ng-src="{{data.picture}}" ng-show="data.picture != ''">
+                <i class="icon ion-refresh light" ng-show="data.picture != ''" ng-click="clearLogo()"></i>
+            </div>
+        </div>
+        <div class="row" ng-show="platform == 'linux' && data.picture == '' ">
+            <div class="col">
+                <div class="light loader-icon">
+                    <div class="loader-icon-container">
+                        <input type="file" id="fileInput" accept="image/*" />
+                        <i class="icon ion-images" ng-click="openPictureModal()"></i>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="platform == 'android' && data.picture == '' ">
+            <div class="col">
+                <div class="light loader-icon">
+                    <i class="icon ion-images" ng-click="openPictureModal()"></i>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <img class="avatar" ng-repeat="picture in listPictures"
+            ng-src="../img/{{picture.url}}" ng-click="toggleImage(picture)">
+        </div>
+        <div class="row">
+            <div class="col">
+                <form name="newProjectForm" ng-submit="newProject(newProjectForm)">
+                    <div class="list list-inset">
+                        <label class="item item-input form-input">
+                            <i class="icon ion-briefcase placeholder-icon"></i>
+                            <input type="text" ng-model="data.name" placeholder="Project name" name="projectName" required>
+                            <div class="validation">
+                                <i ng-show="newProjectForm.$submitted ||
+                                    newProjectForm.projectName.$touched"
+                                    ng-if="
+                                    newProjectForm.projectName.$error.required"
+                                  class="icon ion-android-close assertive"></i>
+                                <i ng-if="newProjectForm.projectName.$valid"
+                                    class="icon ion-android-done balanced"></i>
+                            </div>
+                        </label>
+                        <label class="item item-input form-input">
+                        <i class="icon ion-ios-list placeholder-icon"></i>
+                            <input type="text" ng-model="data.description" placeholder="Description">
+                        </label>
+                    </div>
+
+                    <h3 class="light">Invite Users</h3>
+                    <label class="item item-input">
+                      <i class="icon ion-search placeholder-icon"></i>
+                      <input type="text" ng-model="searchUser" placeholder="Search User">
+                    </label>
+
+                    <div class="item item-input" ng-repeat="user in listUsers |
+                        filter:searchUser | limitTo:2" ng-click="inviteUser(user)"
+                        ng-if="searchUser">
+                            <div class="item-avatar" style="padding-top: 5px;">
+                                <img ng-src="{{user.avatar}}">
+                                {{user.username}}
+                                <div class="item-text-wrap">
+                                    {{user.email}}
+                                </div>
+                            </div>
+                    </div>
+                    <div class="item item-input">
+                        <label class="item-input-wrapper">
+                            <input type="text" ng-model="data.toInvite" placeholder="Invite Users">
+                        </label>
+                        <button type="button" class="button button-regular button-positive padding-button-send"
+                                ng-click="addMember()">
+                                <i class="icon ion-paper-airplane"></i>
+                        </button>
+                    </div>
+                    <div class="error" ng-show="showErr">
+                        {{err}}
+                    </div>
+
+                    <h3 class="light">List Members</h3>
+                    <div class="list">
+                        <label class="item item-input item-select" ng-repeat="member in members">
+                            <h3 class="item item-icon-left border-none">
+                                <i class="icon ion-email"></i>
+                                    {{member.email}}
+                            </h3>
+                            <select ng-model="member.rol"
+                            ng-options="rol for rol in roles">
+                                <option value="" selected disabled> Select rol </option>
+                            </select>
+                        </label>
+                    </div>
+                    <div>
+                        <button type="submit" class="button button-full button-assertive ink">Create Project</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

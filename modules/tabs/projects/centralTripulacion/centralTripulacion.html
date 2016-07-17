@@ -1,0 +1,287 @@
+<ion-view view-title="Central de Tripulacions">
+    <ion-content class="centralVuelo-container padding">
+    <div class="card">
+		<table>
+			<tr>
+				<td>Codigo Tripulacion</td>
+				<td>Numero de Tripulantes</td>
+				<td>Idioma de la Tripulacion</td>
+				<td>
+					<button class="button icon ion-plus-round" ng-click="openModal()">
+						Añadir Tripulacion
+					</button>
+				</td>
+			</tr>
+			<tr ng-repeat="tripulacion in listTripulacion">
+				<td>{{tripulacion.codigoTripulacion}}</td>
+				<td>{{tripulacion.numTripulantes}}</td>
+				<td>{{tripulacion.idiomaTripulacion}}</td>
+				<td ng-click="openModalUpdate({{tripulacion}})">
+					<a class="button button-icon icon ion-edit"></a>
+				</td>
+				<td ng-click="eliminar({{tripulacion.codigoTripulacion}})">
+					<a class="button button-icon icon ion-android-delete"></a>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="card">
+		<table>
+			<tr>
+				<td>Codigo del Personal</td>
+				<td>Codigo de la Tripulacion</td>
+				<td>Nombre</td>
+				<td>Apellido</td>
+				<td>Email</td>
+				<td>Edad</td>
+				<td>Cargo</td>
+				<td>
+					<button class="button icon ion-plus-round" ng-click="openModalTrabajadorCreate()"> 		Añadir Trabajador
+					</button>
+				</td>
+			</tr>
+			<tr ng-repeat="tripulacion in listTripulacionTrabajadores">
+				<td>{{tripulacion.codigoPersonal}}</td>
+				<td>{{tripulacion.codigoTripulacion}}</td>
+				<td>{{tripulacion.nombre}}</td>
+				<td>{{tripulacion.apellido}}</td>
+				<td>{{tripulacion.email}}</td>
+				<td>{{tripulacion.edad}}</td>
+				<td>{{tripulacion.cargo}}</td>
+				<td ng-click="openModalTrabajadorUpdate({{tripulacion}})"><a class="button button-icon icon ion-edit"></a></td>
+				<td ng-click="eliminarTrabajador({{tripulacion.codigoPersonal}})">
+					<a class="button button-icon icon ion-android-delete"></a>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<script id="tripulacion-create.html" type="text/ng-template">
+	  <ion-modal-view>
+	    <ion-header-bar>
+	      <h1 class="title">Añadir Nueva Tripulacion</h1>
+	    </ion-header-bar>
+	    <ion-content>
+	      <form name="crearRegistro" ng-submit="registrar(crearRegistro)">
+	        <div class="list list-inset">
+	        	<div class="item item-input">
+	        		<span class="input-label">Cantidad de Tripulacion</span>
+			    	<input type="number" ng-model="data.numTripulantes" 
+			    	placeholder="p.e 15 Pasajeros">
+			    	<span class="input-label">Pasajeros</span>
+				</div>
+	        <div class="item item-icon-left">
+              	<i class="icon ion-android-contacts"></i>
+              	<h2><b>Lista de Idiomas</b></h2>
+         	</div>
+	        <ion-list>
+			  <ion-radio ng-model="data.idiomaTripulacion" ng-value="'ES'">Español</ion-radio>
+			  <ion-radio ng-model="data.idiomaTripulacion" ng-value="'EN'">Ingles</ion-radio>
+			  <ion-radio ng-model="data.idiomaTripulacion" ng-value="'DE'">Aleman</ion-radio>
+			  <ion-radio ng-model="data.idiomaTripulacion" ng-value="'FR'">Frances</ion-radio>
+			</ion-list>
+	        </div>
+	        <div class="item item-divider">
+		    <button type="submit" class="button button-block button-positive">
+		    	<i class="icon ion-paper-airplane"></i>
+			  	Crear Registro
+			</button>
+		  </div>
+		</form>
+	    </ion-content>
+	  </ion-modal-view>
+	</script>
+
+	<script id="tripulacion-update.html" type="text/ng-template">
+	  <ion-modal-view>
+	    <ion-header-bar>
+	      <h1 class="title">Modificar Tripulacion</h1>
+	    </ion-header-bar>
+	    <ion-content>
+	      <form name="actualizarRegistro" ng-submit="actualizar(actualizarRegistro)">
+	        <div class="list list-inset">
+	        	<div class="item item-input">
+	        		<span class="input-label">Nueva cantidad de Tripulacion</span>
+			    	<input type="number" ng-model="data.numTripulantes" 
+			    	placeholder="{{data.numTripulantes}}">
+			    	<span class="input-label">Pasajeros</span>
+				</div>
+	        <div class="item item-icon-left">
+              	<i class="icon ion-android-contacts"></i>
+              	<h2><b>Lista de Idiomas</b></h2>
+         	</div>
+	        <ion-list>
+			  <ion-radio ng-model="data.idiomaTripulacion" ng-value="'ES'">Español</ion-radio>
+			  <ion-radio ng-model="data.idiomaTripulacion" ng-value="'EN'">Ingles</ion-radio>
+			  <ion-radio ng-model="data.idiomaTripulacion" ng-value="'DE'">Aleman</ion-radio>
+			  <ion-radio ng-model="data.idiomaTripulacion" ng-value="'FR'">Frances</ion-radio>
+			</ion-list>
+	        </div>
+	        <div class="item item-divider">
+		    <button type="submit" class="button button-block button-positive">
+		    	<i class="icon ion-edit"></i>
+			  	Actualizar Registro
+			</button>
+		  </div>
+		</form>
+	    </ion-content>
+	  </ion-modal-view>
+	</script>
+
+	<script id="trabajador-create.html" type="text/ng-template">
+	  <ion-modal-view>
+	    <ion-header-bar>
+	      <h1 class="title">Añadir Nuevo Trabajador</h1>
+	    </ion-header-bar>
+	    <ion-content>
+	      <form name="crearTrabajador" ng-submit="registrarTrabajador(crearTrabajador)">
+	        <div class="list list-inset">
+	        	<label class="item item-input">
+		            <i class="icon ion-android-contact placeholder-icon"></i>
+		            <span class="input-label"><b>Codigo de Tripulacion</b></span>
+		            <select ng-model="data.codigoTripulacion">
+				      <option ng-repeat="tripulacion in listTripulacion"
+				      	value="{{tripulacion.codigoTripulacion}}">
+				      	{{tripulacion.codigoTripulacion}}
+				      </option>
+				      <option value="">No Asignado</option>
+				    </select>
+		        </label>
+	        	<label class="item item-input">
+		            <i class="icon ion-android-contact placeholder-icon"></i>
+		            <span class="input-label"><b>Nombre</b></span>
+		            <input type="text"
+		              ng-model="data.nombre"  
+		              placeholder="Pedro">
+		        </label>
+		        <label class="item item-input">
+		            <i class="icon ion-android-contact placeholder-icon"></i>
+		            <span class="input-label"><b>Apellido</b></span>
+		            <input type="text" 
+		              ng-model="data.apellido"  
+		              placeholder="Perez">
+		        </label>
+		        <label class="item item-input">
+		            <i class="icon ion-email placeholder-icon"></i>
+		            <span class="input-label"><b>Email</b></span>
+		            <input type="email" ng-minlength="15" ng-maxlength="40" name="email" 
+		              ng-model="data.email" 
+		              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+		              placeholder="Email">
+		            <div class="validation">
+		              <i ng-show="signupForm.$submitted || signupForm.email.$touched"
+		                ng-if="signupForm.email.$error.minlength || 
+		                        signupForm.email.$error.maxlength ||
+		                        signupForm.email.$error.required  ||
+		                        signupForm.email.$error.email     ||
+		                        signupForm.email.$error.pattern" 
+		                class="icon ion-android-close assertive"></i>
+		              <i ng-if="signupForm.email.$valid" class="icon ion-android-done balanced"></i>
+		            </div>
+          		</label>
+          		<label class="item item-input">
+		            <i class="icon ion-android-contact placeholder-icon"></i>
+		            <span class="input-label"><b>Edad</b></span>
+		            <input type="number"
+		              ng-model="data.edad"  
+		              placeholder="25 Años">
+		        </label>
+		        <label class="item item-input">
+		            <i class="icon ion-android-contact placeholder-icon"></i>
+		            <span class="input-label"><b>Cargo</b></span>
+		            <input type="text"
+		              ng-model="data.cargo"  
+		              placeholder="Piloto">
+		        </label>
+	        </div>
+	        <div class="item item-divider">
+		    <button type="submit" class="button button-block button-positive">
+		    	<i class="icon ion-paper-airplane"></i>
+			  	Crear Registro
+			</button>
+		  	</div>
+		</form>
+	    </ion-content>
+	  </ion-modal-view>
+	</script>
+
+	<script id="trabajador-update.html" type="text/ng-template">
+	  <ion-modal-view>
+	    <ion-header-bar>
+	      <h1 class="title">Añadir Nuevo Trabajador</h1>
+	    </ion-header-bar>
+	    <ion-content>
+	      <form name="updateTrabajador" ng-submit="actualizarTrabajador(updateTrabajador)">
+	        <div class="list list-inset">
+	        	<label class="item item-input">
+		            <i class="icon ion-android-contact placeholder-icon"></i>
+		            <span class="input-label"><b>Codigo de Tripulacion</b></span>
+		            <select ng-model="data.codigoTripulacion">
+				      <option ng-repeat="tripulacion in listTripulacion"
+				      	value="{{tripulacion.codigoTripulacion}}">
+				      	{{tripulacion.codigoTripulacion}}
+				      </option>
+				      <option value="">No Asignado</option>
+				    </select>
+		        </label>
+	        	<label class="item item-input">
+		            <i class="icon ion-android-contact placeholder-icon"></i>
+		            <span class="input-label"><b>Nombre</b></span>
+		            <input type="text"
+		              ng-model="data.nombre"  
+		              placeholder="Pedro">
+		        </label>
+		        <label class="item item-input">
+		            <i class="icon ion-android-contact placeholder-icon"></i>
+		            <span class="input-label"><b>Apellido</b></span>
+		            <input type="text" 
+		              ng-model="data.apellido"  
+		              placeholder="Perez">
+		        </label>
+		        <label class="item item-input">
+		            <i class="icon ion-email placeholder-icon"></i>
+		            <span class="input-label"><b>Email</b></span>
+		            <input type="email" ng-minlength="15" ng-maxlength="40" name="email" 
+		              ng-model="data.email" 
+		              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+		              placeholder="Email">
+		            <div class="validation">
+		              <i ng-show="signupForm.$submitted || signupForm.email.$touched"
+		                ng-if="signupForm.email.$error.minlength || 
+		                        signupForm.email.$error.maxlength ||
+		                        signupForm.email.$error.required  ||
+		                        signupForm.email.$error.email     ||
+		                        signupForm.email.$error.pattern" 
+		                class="icon ion-android-close assertive"></i>
+		              <i ng-if="signupForm.email.$valid" class="icon ion-android-done balanced"></i>
+		            </div>
+          		</label>
+          		<label class="item item-input">
+		            <i class="icon ion-android-contact placeholder-icon"></i>
+		            <span class="input-label"><b>Edad</b></span>
+		            <input type="number"
+		              ng-model="data.edad"  
+		              placeholder="{{data.edad}}">
+		        </label>
+		        <label class="item item-input">
+		            <i class="icon ion-android-contact placeholder-icon"></i>
+		            <span class="input-label"><b>Cargo</b></span>
+		            <input type="text"
+		              ng-model="data.cargo"  
+		              placeholder="Piloto">
+		        </label>
+	        </div>
+	        <div class="item item-divider">
+		    <button type="submit" class="button button-block button-positive">
+		    	<i class="icon ion-paper-airplane"></i>
+			  	Crear Registro
+			</button>
+		  	</div>
+		</form>
+	    </ion-content>
+	  </ion-modal-view>
+	</script>
+
+    </ion-content>
+</ion-view>

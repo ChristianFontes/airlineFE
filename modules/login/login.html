@@ -1,0 +1,219 @@
+<ion-content class="login-container">
+  <div class="row language-selector">
+    <button class="button button-clear button-small"
+    ng-click="changeLanguage('es')"
+    ng-class="{'button-light': language == 'es', 'button-stable': language == 'en'}"
+    translate="">es</button>
+    <button class="button button-clear button-small"
+    ng-click="changeLanguage('en')"
+    ng-class="{'button-light': language == 'en', 'button-stable': language == 'es'}"
+    translate="">en</button>
+  </div>
+
+  <div class="row line">
+    <div class="col col-50">
+      <div class="hero no-header flat">
+        <div class="content">
+          <div class="app-icon"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col col-10">
+    </div>
+    <!-- Login -->
+    <div class="col col-33">
+      <form name="loginForm" ng-submit="login(loginForm)" >
+        <div class="list list-inset">
+          <div class="item item-icon-left">
+              <i class="icon ion-person"></i>
+              <h2><b>{{ 'login' | translate }}</b></h2>
+          </div>
+          <label class="item item-input">
+            <i class="icon ion-person placeholder-icon"></i>
+            <input type="text" ng-minlength="10" ng-maxlength="40" name="email" ng-model="data.emailLogin" placeholder="{{ 'email' | translate }}" required>
+            <div class="validation">
+              <i ng-show="loginForm.$submitted || loginForm.email.$touched"
+                ng-if="loginForm.email.$error.minlength ||
+                        loginForm.email.$error.maxlength ||
+                        loginForm.email.$error.required"
+                class="icon ion-android-close assertive"></i>
+              <i ng-if="loginForm.email.$valid" class="icon ion-android-done balanced"></i>
+            </div>
+          </label>
+          <label class="item item-input">
+            <i class="icon ion-locked placeholder-icon"></i>
+            <input type="password" ng-minlength="6" ng-maxlength="30" name="password" ng-model="data.passwordLogin" placeholder="{{ 'password' | translate }}" required>
+            <div class="validation">
+              <i ng-show="loginForm.$submitted || loginForm.password.$touched"
+                ng-if="loginForm.password.$error.minlength ||
+                      loginForm.password.$error.maxlength ||
+                      loginForm.password.$error.required"
+                class="icon ion-android-close assertive"></i>
+              <i ng-if="loginForm.password.$valid" class="icon ion-android-done balanced"></i>
+            </div>
+          </label>
+          <ion-toggle ng-model="data.toggle" toggle-class="toggle-calm">¿Eres Administrador?</ion-toggle>
+        </div>
+        <div class="padding">
+          <button type="submit" class="button button-full button-assertive ink">
+            <b>{{ 'login' | translate }}</b>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="error-center">
+    <div class="error" ng-show="showErr">
+      {{ err | translate }}
+    </div>
+  </div>
+<!--  -->
+  <div class="row line2">
+    <div class="col col-60">
+      <h1>Areopuertos Internacionales de Venezuela</h1>
+      <ion-slide-box auto-play="true" does-continue="true"
+        on-slide-changed="slideHasChanged($index)">
+        <ion-slide>
+          <h1 class="titleSlide">Jacinto Lara</h1>
+          <img src="../img/aeropuerto1.jpg">
+        </ion-slide>
+        <ion-slide>
+          <h1 class="titleSlide">Juan Pablo Pérez Alfonso</h1>
+          <img src="../img/aeropuerto2.jpg">
+        </ion-slide>
+        <ion-slide>
+          <h1 class="titleSlide">Jose Tadeo Monagas</h1>
+          <img src="../img/aeropuerto3.jpg">
+        </ion-slide>
+        <ion-slide>
+          <h1 class="titleSlide">Antonio José de Sucre</h1>
+          <img src="../img/aeropuerto5.jpg">
+        </ion-slide>
+        <ion-slide>
+          <h1 class="titleSlide">Juan Vicente Gómez</h1>
+          <img src="../img/aeropuerto6.jpg">
+        </ion-slide>
+        <ion-slide>
+          <h1 class="titleSlide">Buenaventura Vivas</h1>
+          <img src="../img/aeropuerto7.jpg">
+        </ion-slide>
+      </ion-slide-box>
+    </div>
+    <!-- Form SignUp -->
+    <div class="col col-33">
+      <form name="signupForm" ng-submit="signup(signupForm)" >
+        <div class="list list-inset">
+          <div class="item item-icon-left">
+              <i class="icon ion-clipboard"></i>
+              <h2><b>{{ 'register' | translate }}</b></h2>
+          </div>
+          <label class="item item-input">
+            <i class="icon ion-card placeholder-icon"></i>
+            <span class="input-label"><b>{{ 'dni' | translate }}</b></span>
+            <input type="text" name="dni" 
+              ng-model="data.dni"  
+              placeholder="V-12.345.678">
+          </label>
+          <label class="item item-input">
+            <i class="icon ion-android-contact placeholder-icon"></i>
+            <span class="input-label"><b>{{ 'firstName' | translate }}</b></span>
+            <input type="text" name="firstName" 
+              ng-model="data.firstName"  
+              placeholder="Pedro">
+          </label>
+          <label class="item item-input">
+            <i class="icon ion-android-contact placeholder-icon"></i>
+            <span class="input-label"><b>{{ 'lastName' | translate }}</b></span>
+            <input type="text" name="lastName" 
+              ng-model="data.lastName"  
+              placeholder="Perez">
+          </label>
+          <label class="item item-input">
+            <i class="icon ion-ios-location placeholder-icon"></i>
+            <span class="input-label"><b>{{ 'streetAddress' | translate }}</b></span>
+            <input type="text" name="streetAddress" 
+              ng-model="data.streetAddress"  
+              placeholder="Urb. Miranda, La Florencia">
+          </label>
+          <label class="item item-input item-select">
+            <i class="icon ion-android-pin placeholder-icon"></i>
+            <span class="input-label"><b>{{ 'state' | translate }}</b></span>
+            <select ng-model="data.state">
+              <option ng-repeat="state in listState">
+                {{state}}
+              </option>
+            </select>
+          </label>
+          <label class="item item-input">
+            <i class="icon ion-email placeholder-icon"></i>
+            <span class="input-label"><b>{{ 'postalCode' | translate }}:</b></span>
+            <input type="text" pattern="^\d{5}(?:[-\s]\d{4})?$" 
+            name="zip" ng-model="data.zipcode" placeholder="1133">
+          </label>
+
+          <div class="item item-icon-left">
+              <i class="icon ion-information-circled"></i>
+              <h2><b>{{ 'InfoContact' | translate }}</b></h2>
+          </div>
+
+          <label class="item item-input">
+          <i class="icon ion-android-call placeholder-icon"></i>
+          <span class="input-label"><b>{{ 'phone' | translate }}</b></span>
+          <input type="text" international-phone-number only-countries="ve" 
+            ng-model="data.phone">
+          </label>
+
+          <label class="item item-input">
+          <i class="icon ion-android-phone-portrait placeholder-icon"></i>
+          <span class="input-label"><b>{{ 'phone' | translate }}</b></span>
+          <input type="text" international-phone-number only-countries="ve" 
+            ng-model="data.cellPhone">
+          </label>
+
+          <div class="item item-icon-left">
+              <i class="icon ion-information-circled"></i>
+              <h2><b>{{ 'InfoLogin' | translate }}</b></h2>
+          </div>
+
+          <label class="item item-input">
+            <i class="icon ion-email placeholder-icon"></i>
+            <span class="input-label"><b>{{ 'email' | translate }}:</b></span>
+            <input type="email" ng-minlength="15" ng-maxlength="40" name="email" 
+              ng-model="data.email" 
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              placeholder="{{ 'emailText' | translate }}" required>
+            <div class="validation">
+              <i ng-show="signupForm.$submitted || signupForm.email.$touched"
+                ng-if="signupForm.email.$error.minlength || 
+                        signupForm.email.$error.maxlength ||
+                        signupForm.email.$error.required  ||
+                        signupForm.email.$error.email     ||
+                        signupForm.email.$error.pattern" 
+                class="icon ion-android-close assertive"></i>
+              <i ng-if="signupForm.email.$valid" class="icon ion-android-done balanced"></i>
+            </div>
+          </label>
+          <label class="item item-input">
+            <i class="icon ion-locked placeholder-icon"></i>
+            <span class="input-label"><b>{{ 'password' | translate }}:</b></span>
+            <input type="password" ng-minlength="6" ng-maxlength="30" name="password" ng-model="data.password" placeholder="{{ 'passwordText' | translate }}">
+            <div class="validation">
+              <i ng-show="signupForm.$submitted || signupForm.password.$touched"
+                ng-if="signupForm.password.$error.minlength || 
+                        signupForm.password.$error.maxlength ||
+                        signupForm.password.$error.required" 
+                class="icon ion-android-close assertive"></i>
+              <i ng-if="signupForm.password.$valid" class="icon ion-android-done balanced"></i>
+            </div>
+          </label>
+        </div>
+        <div class="padding">
+          <button type="submit" class="button button-full button-assertive ink">
+            <b>{{ 'register' | translate }}</b>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,23 @@
+{
+	"phone": "Numero de Telefono:",
+	"emailText": "nombre@dominio.com",
+	"passwordText": "Su Contraseña",
+	"streetAddress": "Direccion:",
+	"state": "Estado:",
+	"postalCode": "Codigo Postal",
+	"firstName": "Primer Nombre:",
+	"lastName": "Primer Apellido:",
+	"email": "Correo Electronico",
+	"password": "Contraseña",
+	"login": "Iniciar Sesión",
+	"messageSignup": "¿Aún no tienes cuenta?",
+	"signup": "Regístrate Aqui",
+	"register": "Registrar",
+	"email_and_password_required": "Nombre de Usuario y Contraseña son requeridos",
+	"email_and_password_dont_match": "Nombre de Usuario y Contraseña no coinciden",
+	"user_not_found": "Nombre de Usuario no encontrado",
+	"back": "Atras",
+	"InfoContact": "Informacion de Contacto",
+	"dni": "Cedula de Identidad:",
+	"InfoLogin": "Informacion de Inicio de Sesión"
+}

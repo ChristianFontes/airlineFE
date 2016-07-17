@@ -1,0 +1,141 @@
+<ion-view view-title="Planning">
+    <ion-content class="projects-container padding">
+        <div class="row">
+            <div class="col col-75">
+                <h2 class="title padding light">Planning</h2>
+            </div>
+        </div>
+
+        <div class="center">
+            <h3 class="light progress-bg">
+                <b>{{project.name}}</b> 
+            </h3>
+            <h4 class="light progress-bg">
+                <p>{{project.description}}</p>
+            </h4>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <div class="col-75">
+                        <h2 class="light"> Backlog </h2>
+                    </div>
+                    <div class="col col-25 button-align">
+                        <button class="button button-assertive button-radius" ng-click="creatingUserStory = true" ng-show="!creatingUserStory">
+                            <i class="icon ion-plus"></i>
+                        </button>
+                        <button class="button button-assertive button-radius" ng-click="creatingUserStory = false" ng-show="creatingUserStory">
+                            <i class="icon ion-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row" ng-show="creatingUserStory">
+                    <div class="col">
+                        <form name="userStoryForm" ng-submit="createStory(userStoryForm)">
+                            <div class="list list-inset">
+                                <label class="item item-input">
+                                    <input type="text" ng-model="data.userStory.name" placeholder="User story" required>
+                                </label>
+                                <label class="item item-input">
+                                    <input type="text" ng-model="data.userStory.description" placeholder="Description">
+                                </label>
+                            </div>
+                            <button type="submit" class="button button-full button-assertive ink">Create user story</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <ion-list show-reorder="true">
+                          <ion-item ng-repeat="userStory in listUserStories">
+                            {{userStory.name}}
+                            <ion-reorder-button 
+                                class="ion-navicon" on-reorder="moveItem(userStory, $fromIndex, $toIndex)">
+                            </ion-reorder-button>
+                          </ion-item>
+                        </ion-list>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div ng-show="showCreatingSprint"> 
+
+            <!-- BUTTON SPRINT CREATE -->
+
+            <div class="row padding">
+                <div class="col-75">
+                    <h3 class="title padding light">Sprints</h3>
+                </div>
+                <div class="col col-25 button-align">
+                    <button class="button button-assertive button-radius" ng-click="creatingSprint = true" ng-show="!creatingSprint">
+                        <i class="icon ion-plus"></i>
+                    </button>
+                    <button class="button button-assertive button-radius" ng-click="creatingSprint = false" ng-show="creatingSprint">
+                        <i class="icon ion-minus"></i>
+                    </button>
+                </div>
+            </div>
+        
+            <!-- FORM SPRINT CREATE -->
+
+            <div class="row" ng-show="creatingSprint">
+                <div class="col">
+                    <form name="sprintForm" ng-submit="createSprint(sprintForm)">
+                        <div class="list list-inset">
+                            <label class="item item-input">
+                                <input type="text" ng-model="data.sprint.name" placeholder="Sprint name" required>
+                            </label>
+                            <label class="item item-input">
+                                <input type="date" ng-model="data.sprint.start" 
+                                min="{{year}}-01-01" 
+                                max="{{year}}-12-31"
+                                required>
+                            </label>
+                            <label class="item item-input">
+                                <input type="date" ng-model="data.sprint.end" 
+                                min="{{year}}-01-01" 
+                                max="{{year}}-12-31"
+                                required>
+                            </label>
+                        </div>
+                        <div ng-if="data.sprint.end < data.sprint.start">
+                            <div class="light error">Error en fecha de culminacion</div>
+                        </div>
+
+                        <h3 class="light"> Sprint user stories </h3>
+                        <ion-list>
+                            <ion-checkbox 
+                                ng-repeat="userStory in listUserStories"
+                                ng-model="userStory.selected" ng-show="creatingSprint">
+                                {{ userStory.name }} 
+                            </ion-checkbox>
+                        </ion-list>
+                        <button type="submit" ng-show="creatingSprint" class="button button-full button-assertive"
+                        > Create sprint </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="list card padding" ng-repeat="sprint in project.sprints">
+            <h5 class="item item-icon-left activated"><i class="icon ion-ios-timer-outline"></i><b>{{sprint.name}}</b></h5>
+            
+            <h4 class="item item-icon-left"><i class="icon ion-android-calendar"></i>
+            Inicio: {{sprint.start | date:'longDate'}}</h4>
+
+            <h4 class="item item-icon-left"><i class="icon ion-android-calendar"></i>
+            Fin: {{sprint.end | date:'longDate'}}</h4>
+
+            <h6 class="item item-icon-left activated"><i class="icon ion-chatbubbles"></i>
+            <b>Historias de usuario</b></h6>
+            <ul>
+                <li ng-repeat="userStory in sprint.userStories | orderBy:'priority'">
+                    <h4 class="item item-icon-left"> {{ userStory.name }} </h4>
+                </li>
+            </ul>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,24 @@
+<ion-view view-title="New Sprint">
+    <ion-content class="padding create-project-container">
+    <div class="row">
+        <div class="col">
+        <form name="newSprintForm" ng-submit="newSprint(newSprintForm)">
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <input type="text" ng-model="data.name" placeholder="Sprint name">
+                </label>
+                <label class="item item-input">
+                    <input type="date" ng-model="data.inicio">
+                </label>
+                <label class="item item-input">
+                    <input type="date" ng-model="data.fin">
+                </label>
+            </div>
+            <div>
+                <button type="submit" class="button button-full button-assertive ink">Create task</button>
+            </div>
+        </form>
+        </div>
+    </div>
+    </ion-content>
+</ion-view>

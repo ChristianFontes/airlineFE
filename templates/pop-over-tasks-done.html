@@ -1,0 +1,12 @@
+<ion-popover-view style="max-width: 180px; max-height: 100px;">
+	<ion-content scroll="false">
+		<ion-item class="item item-icon-left" ng-click="moveToDo();">
+			<i class="icon ion-archive"></i><h4>
+			{{ 'move' | translate }} {{ 'toDo' | translate }}</h4>
+		</ion-item>
+		<ion-item class="item item-icon-left" ng-click="moveToDoing();">
+			<i class="icon ion-compose"></i><h4>
+			{{ 'move' | translate }} {{ 'doing' | translate }}</h4>
+		</ion-item>
+	</ion-content>
+</ion-popover-view>

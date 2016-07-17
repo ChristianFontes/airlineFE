@@ -1,0 +1,224 @@
+<ion-view view-title="Pasajeros">
+    <ion-content class="centralVuelo-container padding">
+    	<div class="row">
+            <div class="col col-85">
+                <h2 class="title padding light">Pasajeros</h2>
+            </div>
+            <div class="col col-10">
+                <button class="button button-assertive" ng-click="creatingTask = true" 
+                	ng-show="!creatingTask">
+                    <i class="icon ion-plus"></i>
+                </button>
+                <button class="button button-assertive" ng-click="creatingTask = false" 
+                	ng-show="creatingTask">
+                    <i class="icon ion-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col col-50">
+        <div class="card" ng-show="creatingTask">
+		  <div class="item-text-wrap">
+		    <form name="nuevoRegistro" ng-submit="registrar(nuevoRegistro)">
+		        <div class="list list-inset">
+		          <div class="item item-icon-left">
+		              <i class="icon ion-android-plane"></i>
+		              <h2><b>Nuevo Registro de Pasajero</b></h2>
+		          </div>
+		          <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Cedula</span>
+				    <input type="number" ng-model="data.cedula">
+				  </label>
+		          <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Nombre</span>
+				    <input type="text" ng-model="data.nombre">
+				  </label>
+				  <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Apellido</span>
+				    <input type="text" ng-model="data.apellido">
+				  </label>
+				  <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Email</span>
+				    <input type="text" ng-model="data.email">
+				  </label>
+				  <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Edad</span>
+				    <input type="number" ng-model="data.edad">
+				  </label>
+				  <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Sexo</span>
+				    <select ng-model="data.sexo">
+				      <option>Hombre</option>
+				      <option>Mujer</option>
+				    </select>
+				  </label>
+		          <div class="item item-icon-left">
+		              <i class="icon ion-android-plane"></i>
+		              <h2><b>Datos de la Aerolinea</b></h2>
+		          </div>
+		          <ion-toggle ng-model="data.lealtad" toggle-class="toggle-calm">
+		          	¿Eres Cliente Lealtad?
+		          </ion-toggle>
+		          <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Clase</span>
+				    <select ng-model="data.clase">
+				      <option ng-repeat="clase in clases">{{clase}}</option>
+				    </select>
+				  </label>
+				  <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Numero de Equipaje</span>
+				    <input type="number" ng-model="data.numEquipaje">
+				  </label>
+				  <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Peso de Equipaje</span>
+				    <input type="number" step="any" ng-model="data.pesoEquipaje">
+				  </label>
+		          <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Numero de Vuelo</span>
+				    <select ng-model="data.numVuelo">
+				      <option ng-repeat="vuelo in listVuelos">{{vuelo.numVuelo}}</option>
+				  </select>
+				  </label>
+				</div>
+		        <div class="item item-divider">
+			    <button type="submit" class="button button-block button-positive">
+			    	<i class="icon ion-paper-airplane"></i>
+				  	Enviar Nuevo Registro
+				</button>
+			  </div>
+			</form>
+		  </div>
+		</div>
+		</div>
+        <div class="card" ng-show="!creatingTask">
+			<table>
+				<tr>
+					<td>Cedula</td>
+					<td>Nombre</td>
+					<td>Apellido</td>
+					<td>Email</td>
+					<td>Edad</td>
+					<td>Sexo</td>
+					<td>Lealtad</td>
+					<td>Clase</td>
+					<td>Cantidad de Equipaje</td>
+					<td>Peso de Equipaje</td>
+					<td>Numero de Vuelo</td>
+				</tr>
+				<tr ng-repeat="pasajero in listPasajeros">
+					<td>{{pasajero.cedula}}</td>
+					<td>{{pasajero.nombre}}</td>
+					<td>{{pasajero.apellido}}</td>
+					<td>{{pasajero.email}}</td>
+					<td>{{pasajero.edad}}</td>
+					<td>{{pasajero.sexo}}</td>
+					<td>{{pasajero.lealtad}}</td>
+					<td>{{pasajero.clase}}</td>
+					<td>{{pasajero.numEquipaje}}</td>
+					<td>{{pasajero.pesoEquipaje}}</td>
+					<td>{{pasajero.numVuelo}}</td>
+					<td ng-click="openModal({{pasajero}})"><a class="button button-icon icon ion-edit"></a></td>
+					<td ng-click="eliminar({{pasajero.id}})">
+						<a class="button button-icon icon ion-android-delete"></a>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<script id="pasajero-update.html" type="text/ng-template">
+		  <ion-modal-view>
+		    <ion-header-bar>
+		      <h1 class="title">Actualizar Registro</h1>
+		    </ion-header-bar>
+		    <ion-content>
+		    <form name="actualizarRegistro" ng-submit="actualizar(actualizarRegistro)">
+		       <div class="list list-inset">
+		          <div class="item item-icon-left">
+		              <i class="icon ion-android-plane"></i>
+		              <h2><b>Actualizar Registro de Pasajero</b></h2>
+		          </div>
+		          <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Cedula</span>
+				    <input type="number" ng-model="data.cedula" placeholder="{{data.cedula}}">
+				  </label>
+		          <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Nombre</span>
+				    <input type="text" ng-model="data.nombre">
+				  </label>
+				  <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Apellido</span>
+				    <input type="text" ng-model="data.apellido">
+				  </label>
+				  <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Email</span>
+				    <input type="text" ng-model="data.email">
+				  </label>
+				  <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Edad</span>
+				    <input type="number" ng-model="data.edad" placeholder="{{data.edad}}">
+				  </label>
+				  <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Sexo</span>
+				    <select ng-model="data.sexo">
+				      <option>Hombre</option>
+				      <option>Mujer</option>
+				    </select>
+				  </label>
+		          <div class="item item-icon-left">
+		              <i class="icon ion-android-plane"></i>
+		              <h2><b>Datos de la Aerolinea</b></h2>
+		          </div>
+		          <ion-toggle ng-model="data.lealtad" toggle-class="toggle-calm">
+		          	¿Eres Cliente Lealtad?
+		          </ion-toggle>
+		          <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Clase</span>
+				    <select ng-model="data.clase">
+				      <option ng-repeat="clase in clases">{{clase}}</option>
+				    </select>
+				  </label>
+				  <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Numero de Equipaje</span>
+				    <input type="number" ng-model="data.numEquipaje" placeholder="{{data.numEquipaje}}">
+				  </label>
+				  <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Peso de Equipaje</span>
+				    <input type="number" step="any" ng-model="data.pesoEquipaje" placeholder="{{data.pesoEquipaje}}">
+				  </label>
+		          <label class="item item-input">
+		          	<i class="icon ion-person placeholder-icon"></i>
+				    <span class="input-label">Numero de Vuelo</span>
+				    <select ng-model="data.numVuelo">
+				      <option ng-repeat="vuelo in listVuelos">{{vuelo.numVuelo}}</option>
+				  </select>
+				  </label>
+				</div>
+		        <div class="item item-divider">
+			    <button type="submit" class="button button-block button-positive">
+			    	<i class="icon ion-edit"></i>
+				  	Actualizar Registro
+				</button>
+			  </div>
+			</form>
+		    </ion-content>
+		  </ion-modal-view>
+		</script>
+    </ion-content>
+</ion-view>

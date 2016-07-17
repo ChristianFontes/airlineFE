@@ -1,0 +1,164 @@
+<ion-view view-title="Central de Vuelos">
+    <ion-content class="centralVuelo-container padding">
+    	<div class="row">
+            <div class="col col-85">
+                <h2 class="title padding light">Central de Vuelos</h2>
+            </div>
+            <div class="col col-10">
+                <button class="button button-assertive" ng-click="creatingTask = true" 
+                	ng-show="!creatingTask">
+                    <i class="icon ion-plus"></i>
+                </button>
+                <button class="button button-assertive" ng-click="creatingTask = false" 
+                	ng-show="creatingTask">
+                    <i class="icon ion-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col col-50">
+        <div class="card" ng-show="creatingTask">
+		  <div class="item item-text-wrap">
+		    <form name="nuevoRegistro" ng-submit="registrar(nuevoRegistro)">
+		        <div class="list list-inset">
+		          <div class="item item-icon-left">
+		              <i class="icon ion-android-plane"></i>
+		              <h2><b>Nuevo Registro de Vuelo</b></h2>
+		          </div>
+		          <label class="item item-input">
+		            <i class="icon ion-person placeholder-icon"></i>
+		            <input type="text" name="salida" ng-model="data.salida" placeholder="Salida" required>
+		          </label>
+		          <label class="item item-input">
+		            <i class="icon ion-person placeholder-icon"></i>
+		            <input type="text" name="destino" ng-model="data.destino" placeholder="Destino" required>
+		          </label>
+		          <div class="item item-icon-left">
+		              <i class="icon ion-android-plane"></i>
+		              <h2><b>Sector de su Viaje</b></h2>
+		          </div>  
+		          	<ion-list>
+					  <ion-radio ng-model="data.sector" ng-value="'Africa'">Africa</ion-radio>
+					  <ion-radio ng-model="data.sector" ng-value="'America'">America</ion-radio>
+					  <ion-radio ng-model="data.sector" ng-value="'Europa'">Europa</ion-radio>
+					  <ion-radio ng-model="data.sector" ng-value="'Asia'">Asia</ion-radio>
+					  <ion-radio ng-model="data.sector" ng-value="'Caribe'">Caribe</ion-radio>
+					</ion-list>
+		          <div class="item item-icon-left">
+		              <i class="icon ion-android-plane"></i>
+		              <h2><b>Tiempo de Vuelo</b></h2>
+		          </div>  
+				  <div class="item range range-positive">
+				    <input type="range" ng-model="data.tiempoVuelo" min="0" max="10" value="1">
+				    {{data.tiempoVuelo}} Horas
+				  </div>
+
+		          <label class="item item-input">
+		            <i class="icon ion-person placeholder-icon"></i>
+		            <input type="text" name="destino" ng-model="data.modeloAvion" placeholder="Modelo Avion" required>
+		          </label>
+		          <label class="item item-input">
+		            <i class="icon ion-person placeholder-icon"></i>
+		            <input type="text" name="destino" ng-model="data.codigoTripulacion" placeholder="Codigo de Tripulacion" required>
+		          </label>
+		          <ion-toggle ng-model="data.disponible" toggle-class="toggle-calm">Disponible</ion-toggle>
+		        </div>
+		        <div class="item item-divider">
+			    <button type="submit" class="button button-block button-positive">
+			    	<i class="icon ion-paper-airplane"></i>
+				  	Enviar Nuevo Registro
+				</button>
+			  </div>
+			</form>
+		  </div>
+		</div>
+		</div>
+		<div class="card" ng-show="!creatingTask">
+			<table>
+				<tr>
+					<td>Numero de Vuelo</td>
+					<td>Salida</td>
+					<td>Destino</td>
+					<td>Sector</td>
+					<td>Tiempo de Vuelo</td>
+					<td>Modelo del Avion</td>
+					<td>Codigo Tripulacion</td>
+					<td>Estado</td>
+					<td>Editar</td>
+					<td>Eliminar</td>
+				</tr>
+				<tr ng-repeat="vuelo in listVuelo">
+					<td>{{vuelo.numVuelo}}</td>
+					<td>{{vuelo.salida}}</td>
+					<td>{{vuelo.destino}}</td>
+					<td>{{vuelo.sector}}</td>
+					<td>{{vuelo.tiempoVuelo}}</td>
+					<td>{{vuelo.modeloAvion}}</td>
+					<td>{{vuelo.codigoTripulacion}}</td>
+					<td>{{vuelo.disponible}}</td>
+					<td ng-click="openModal({{vuelo}})"><a class="button button-icon icon ion-edit"></a></td>
+					<td ng-click="eliminar({{vuelo.numVuelo}})">
+						<a class="button button-icon icon ion-android-delete"></a>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<script id="my-modal.html" type="text/ng-template">
+		  <ion-modal-view>
+		    <ion-header-bar>
+		      <h1 class="title">Actualizar Registro</h1>
+		    </ion-header-bar>
+		    <ion-content>
+		      <form name="actualizarRegistro" ng-submit="actualizar(actualizarRegistro)">
+		        <div class="list list-inset">
+		          <label class="item item-input">
+		            <i class="icon ion-person placeholder-icon"></i>
+		            <input type="text" name="salida" ng-model="data.salida" placeholder="Salida" required>
+		          </label>
+		          <label class="item item-input">
+		            <i class="icon ion-person placeholder-icon"></i>
+		            <input type="text" name="destino" ng-model="data.destino" placeholder="Destino" required>
+		          </label>
+		          <div class="item item-icon-left">
+		              <i class="icon ion-android-plane"></i>
+		              <h2><b>Sector de su Viaje</b></h2>
+		          </div>  
+		          	<ion-list>
+					  <ion-radio ng-model="data.sector" ng-value="'Africa'">Africa</ion-radio>
+					  <ion-radio ng-model="data.sector" ng-value="'America'">America</ion-radio>
+					  <ion-radio ng-model="data.sector" ng-value="'Europa'">Europa</ion-radio>
+					  <ion-radio ng-model="data.sector" ng-value="'Asia'">Asia</ion-radio>
+					  <ion-radio ng-model="data.sector" ng-value="'Caribe'">Caribe</ion-radio>
+					</ion-list>
+		          <div class="item item-icon-left">
+		              <i class="icon ion-android-plane"></i>
+		              <h2><b>Tiempo de Vuelo</b></h2>
+		          </div>  
+				  <div class="item range range-positive">
+				    <input type="range" ng-model="data.tiempoVuelo" min="0" max="10" value="1">
+				    {{data.tiempoVuelo}} Horas
+				  </div>
+
+		          <label class="item item-input">
+		            <i class="icon ion-person placeholder-icon"></i>
+		            <input type="text" name="destino" ng-model="data.modeloAvion" placeholder="Modelo Avion" required>
+		          </label>
+		          <label class="item item-input">
+		            <i class="icon ion-person placeholder-icon"></i>
+		            <input type="text" name="destino" ng-model="data.codigoTripulacion" placeholder="Codigo de Tripulacion" required>
+		          </label>
+		          <ion-toggle ng-model="data.disponible" toggle-class="toggle-calm">
+		          	Disponibilidad del Vuelo
+		          </ion-toggle>
+		        </div>
+		        <div class="item item-divider">
+			    <button type="submit" class="button button-block button-positive">
+			    	<i class="icon ion-edit"></i>
+				  	Actualizar Registro
+				</button>
+			  </div>
+			</form>
+		    </ion-content>
+		  </ion-modal-view>
+		</script>
+    </ion-content>
+</ion-view>

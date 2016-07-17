@@ -1,0 +1,170 @@
+<ion-view view-title="Tasks">
+    <ion-content class="tasks-container projects-container padding">
+        <!-- SPRINT SELECTION -->
+        <div class="row">
+            <div class="col">
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Sprint
+                    </div>
+                    <select ng-model="currentSprint" ng-options="sprint.name for sprint in currentProject.sprints" ng-change="setTasks(currentSprint)"></select>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card userStoryCard " ng-repeat="userStorie in currentSprint.userStories">
+                    <div class="item item-text-wrap">
+                        {{ userStorie.name }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TASKS CREATION -->
+        <div class="row">
+            <div class="col col-75">
+                <h2 class="title padding light">{{ 'tasks' | translate }}</h2>
+            </div>
+            <div class="col col-25">
+                <button class="button button-assertive" ng-click="creatingTask = true" ng-show="!creatingTask">
+                    <i class="icon ion-plus"></i>
+                </button>
+                <button class="button button-assertive" ng-click="creatingTask = false" ng-show="creatingTask">
+                    <i class="icon ion-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="row" ng-show="creatingTask">
+            <div class="col">
+                <form name="taskForm" ng-submit="createTask(taskForm)">
+                    <div class="list list-inset">
+                        <label class="item item-input">
+                            <input type="text" ng-model="data.task.name" name="task" placeholder="{{ 'taskName' | translate }}" required>
+                            <div class="validation">
+                            <i ng-show="taskForm.task.$touched"
+                                ng-if="taskForm.task.$error.required"
+                              class="icon ion-android-close assertive"></i>
+                            <i ng-if="taskForm.task.$valid"
+                                class="icon ion-android-done balanced"></i>
+                            </div>
+                        </label>
+                        <label class="item item-input">
+                            <input type="text" ng-model="data.task.description" placeholder="{{ 'description' | translate }}" name="description" required>
+                            <div class="validation">
+                            <i ng-show="taskForm.description.$touched"
+                                ng-if="taskForm.description.$error.required"
+                              class="icon ion-android-close assertive"></i>
+                            <i ng-if="taskForm.description.$valid"
+                                class="icon ion-android-done balanced"></i>
+                            </div>
+                        </label>
+                        <label class="item item-input">
+                            <input type="number" ng-model="data.task.points" placeholder="{{ 'storyPoints' | translate }}" name="storyPoints" required>
+                            <div class="validation">
+                            <i ng-show="taskForm.storyPoints.$touched"
+                                ng-if="taskForm.storyPoints.$error.required ||
+                                        taskForm.storyPoints.$error.minlength ||taskForm.storyPoints.$error.maxlength"
+                              class="icon ion-android-close assertive"></i>
+                            <i ng-if="taskForm.storyPoints.$valid"
+                                class="icon ion-android-done balanced"></i> 
+                            </div> 
+                    </div>
+                    <h3 class="light">{{ 'userStory' | translate }}</h3>
+                    <ion-list>
+                        <ion-radio name="userStory" ng-repeat="userStory in currentSprint.userStories" ng-model="data.task.userStory" ng-value="userStory.id">
+                            {{ userStory.name }}
+                        </ion-radio>
+                    </ion-list>
+                    <h3 class="light"> {{ 'assignedMember' | translate }} </h3>
+                    <ion-list>
+                        <ion-radio name="member" ng-repeat="member in currentProject.members" ng-model="data.task.member" ng-value="member.id">
+                            {{ member.email }}
+                        </ion-radio>
+                    </ion-list>
+                    <button type="submit" class="button button-full button-assertive">{{ 'createTask' | translate }}</button>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- KAMBAM -->
+        <ion-scroll direction="xy" id="scroll-direction">
+            <div class="row" id="scroll-row">
+                <div class="col col-25">
+                    <div class="card stable-bg">
+                        <h5 class="item item-icon-left activated"><i class="icon ion-archive"></i>{{ 'toDo' | translate }}</h5>
+                        <div class="item item-text-wrap dark-bg" ng-drop="true" ng-drop-success="onDropToDo($data,$event)">
+                            <div ng-repeat="task in droppedToDo" ng-drag="true" ng-drag-data="task" ng-drag-success="onDragToDo($data,$event)" ng-center-anchor="{{centerAnchor}}"
+                            data-allow-transform="false">
+                                <div class="item item-divider" id="format">
+                                    {{task.name}}
+                                    <div class="item-icon-right">
+                                        <button class="icon button button-icon ion-android-more-vertical" ng-click="openPopoverToDo($event, task)">
+                                        </button>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-25">
+                    <div class="card stable-bg">
+                        <h5 class="item item-icon-left activated"><i class="icon ion-compose"></i>{{ 'doing' | translate }}</h5>
+                        <div class="item item-text-wrap dark-bg" ng-drop="true" ng-drop-success="onDropDoing($data,$event)">
+                            <div ng-repeat="task in droppedDoing" ng-drag="true" ng-drag-data="task" ng-drag-success="onDragDoing($data,$event)" ng-center-anchor="{{centerAnchor}}"
+                            data-allow-transform="false">
+                                <div class="item item-divider" id="format">
+                                    {{task.name}}
+                                    <div class="item-icon-right">
+                                        <button class="icon button button-icon ion-android-more-vertical" ng-click="openPopoverDoing($event, task)">
+                                        </button>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-25">
+                    <div class="card stable-bg">
+                        <h5 class="item item-icon-left activated"><i class="icon ion-android-done-all"></i>{{ 'done' | translate }}</h5>
+                        <div class="item item-text-wrap dark-bg" ng-drop="true" ng-drop-success="onDropDone($data,$event)">
+                            <div ng-repeat="task in droppedDone" ng-drag="true" ng-drag-data="task" ng-drag-success="onDragDone($data,$event)" ng-center-anchor="{{centerAnchor}}"
+                            data-allow-transform="false">
+                                <div class="item item-divider" id="format">
+                                    {{task.name}}
+                                    <div class="item-icon-right">
+                                        <button class="icon button button-icon ion-android-more-vertical" ng-click="openPopoverDone($event, task)">
+                                        </button>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col">
+                    <div ng-repeat="action in actions" class="card">
+                        <div class="row">
+                            <div class="col-30">
+                                {{ action.type }}
+                            </div>
+                            <div class="col-30">
+                                {{ action.message }}
+                            </div>
+                            <div class="col-30">
+                                {{ action.user.name }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </ion-scroll>
+    </ion-content>
+</ion-view>
